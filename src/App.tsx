@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, StatusBar } from 'react-native';
-import { DetailView } from './views/DetailView';
-import { MasterView } from './views/MasterView';
+import React, { createContext } from 'react';
+import { Dimensions, SafeAreaView, StatusBar } from 'react-native';
+import { isTablet } from 'react-native-device-info';
+import { SettingsScreen } from './views/SettingsScreen';
+
+const isLandscape = () => {
+	const dim = Dimensions.get('screen');
+	return dim.width >= dim.height;
+};
+
+export const UITypes = {
+	twoPane: 'twoPane',
+	twoScreens: 'twoScreens'
+};
+
+export const MasterDetailContext = createContext(isTablet() ? UITypes.twoPane : UITypes.twoScreens);
 
 const App = () => {
-	const items = Array.from({ length: 20 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
-	const [selected, setSelected] = useState<Model.Item | undefined>(undefined);
-
 	return (
 		<>
 			<StatusBar barStyle='dark-content' />
 			<SafeAreaView>
-				{selected === undefined ?
-					<MasterView
-						selectedItem={selected}
-						items={items}
-						handleItemSelect={(item: Model.Item) => setSelected(item)}
-					/> :
-					<DetailView selectedItem={selected} />}
+				<SettingsScreen />
 			</SafeAreaView>
 		</>
 	);
 };
-
-const styles = StyleSheet.create({
-
-});
 
 export default App;
