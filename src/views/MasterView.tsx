@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { AppState, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { AppStyles } from '../styles/AppStyles';
 
 interface MasterViewProps {

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { BackHandler, View } from 'react-native';
 import { UIContext } from '../App';
 import { DetailView } from './DetailView';
 import { MasterView } from './MasterView';
@@ -9,6 +9,21 @@ export const SettingsScreen = () => {
 
 	const items = Array.from({ length: 20 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
 	const [selected, setSelected] = useState<Model.Item | undefined>(undefined);
+
+	const handleGoBack = useCallback(() => {
+		switch (UIType) {
+			case 'screens':
+				setSelected(undefined);
+				return true;
+			case 'pane':
+				return true;
+		}
+	}, [UIType]);
+
+	useEffect(() => {
+		BackHandler.addEventListener('hardwareBackPress', handleGoBack);
+		return () => BackHandler.removeEventListener('hardwareBackPress', handleGoBack);
+	}, [handleGoBack]);
 
 	const renderViews = () => {
 		switch (UIType) {
@@ -23,7 +38,7 @@ export const SettingsScreen = () => {
 						<DetailView
 							selectedItem={selected}
 							hasHeader={true}
-							handleGoBack={() => setSelected(undefined)}
+							handleGoBack={handleGoBack}
 						/>}
 				</>;
 			case 'pane':
@@ -36,11 +51,11 @@ export const SettingsScreen = () => {
 					/>
 					<DetailView
 						selectedItem={selected ?? items[0]}
-						handleGoBack={() => null}
+						handleGoBack={handleGoBack}
 					/>
 				</View>;
 			default:
-				return <Text>Error</Text>;
+				return <></>;
 		}
 	};
 

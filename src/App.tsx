@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Dimensions, SafeAreaView, StatusBar, TouchableOpacity, Text } from 'react-native';
+import React, { createContext, useEffect, useState } from 'react';
+import { Dimensions, SafeAreaView, StatusBar } from 'react-native';
 import { isTablet } from 'react-native-device-info';
 import { SettingsScreen } from './views/SettingsScreen';
 
@@ -7,12 +7,6 @@ export const UIContext = createContext({
 	UIType: 'screens',
 	setUIType: (type: Model.UIType) => { }
 });
-
-export const UISwitcher = () => {
-	const { UIType, setUIType } = useContext(UIContext);
-
-	return <TouchableOpacity onPress={() => setUIType('pane')}><Text>Press</Text></TouchableOpacity>;
-};
 
 const App = () => {
 	const [UIType, setUIType] = useState<Model.UIType>('screens');
@@ -25,7 +19,6 @@ const App = () => {
 		};
 
 		const handleResize = () => {
-			console.log('resize', isLandscape())
 			isLandscape() || isTablet() ? setUIType('pane') : setUIType('screens');
 		};
 
