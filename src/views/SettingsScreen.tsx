@@ -1,18 +1,18 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Text, View } from 'react-native';
-import { MasterDetailContext, UITypes } from '../App';
+import { UIContext } from '../App';
 import { DetailView } from './DetailView';
 import { MasterView } from './MasterView';
 
 export const SettingsScreen = () => {
-	const UIType = useContext(MasterDetailContext);
+	const { UIType, setUIType } = useContext(UIContext);
 
 	const items = Array.from({ length: 20 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
 	const [selected, setSelected] = useState<Model.Item | undefined>(undefined);
 
 	const renderViews = () => {
 		switch (UIType) {
-			case UITypes.twoScreens:
+			case 'screens':
 				return <>
 					{selected === undefined ?
 						<MasterView
@@ -26,7 +26,7 @@ export const SettingsScreen = () => {
 							handleGoBack={() => setSelected(undefined)}
 						/>}
 				</>;
-			case UITypes.twoPane:
+			case 'pane':
 				return <View style={{ flexDirection: 'row' }}>
 					<MasterView
 						selectedItem={selected}

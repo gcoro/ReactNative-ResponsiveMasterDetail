@@ -39,6 +39,7 @@ module.exports = {
 		'max-len': ['error', { 'code': 130, 'ignoreComments': true }],
 		'jsx-quotes': ['error', 'prefer-single'],
 		'@typescript-eslint/no-unused-vars': 0,
-		'@typescript-eslint/explicit-module-boundary-types': 0
+		'@typescript-eslint/explicit-module-boundary-types': 0,
+		'@typescript-eslint/no-empty-function': 0
 	}
 };
